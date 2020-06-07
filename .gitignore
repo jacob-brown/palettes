@@ -1,3 +1,4 @@
 notes.txt
 img
-plot.pdf
+plot*.pdf
+.Rhistory

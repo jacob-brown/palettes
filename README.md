@@ -8,3 +8,25 @@
 	* `http://web.archive.org/web/20081014161121/http://www.colorjack.com/labs/colormatrix/ (<canvas> + ColorMatrix = Color Blindness)`
 * shiny app for interactive viewing
 
+* colour distances 
+	* https://www.compuphase.com/cmetric.htm
+		- "A low-cost approximation"
+
+
+
+
+
+Functions:
+1. image to colour palettes 
+2. pre defined palettes
+3. websearch for images
+4. displaying user palettes and images 
+5. displaying all palettes and images  
+
+misc - should integrate into the other functions
+6. colour chooser 
+	- pick the best colours from all those available (currently kmeans)
+6. colour optimiser
+	7.1. colour distance
+	7.2. HSL 
+7. colour blind filter
