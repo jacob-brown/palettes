@@ -1,84 +1,54 @@
 # -*- coding: utf-8 -*-
 
-combineRGB <- function(colarray){
+array2Hex <- function(rgbImage){
 
+		### generate a matrix of hex values
 		rotate <- function(x) t(apply(x, 2, rev))
-		
-		# pixalated image to a hex code matrix
-		rmat <- colarray[,,1]
-		gmat <- colarray[,,2]
-		bmat <- colarray[,,3]
+		rmat <- rgbImage[,,1]
+		gmat <- rgbImage[,,2]
+		bmat <- rgbImage[,,3]
 
 		### initate a new vec ###
 		nRow <- dim(rmat)[1]
 		nCol <- dim(rmat)[2]
-		#mat <- matrix(0, len, dim(rmat)[2])
-		mat <- matrix(0, nRow, nCol)
+		hmat <- matrix(0, nRow, nCol)
 		
 		for(r in 1:nRow){
 			for(c in 1:nCol){
-				mat[r,c] <- rgb(rmat[r,c], gmat[r,c], bmat[r,c] , maxColorValue=255)				
+				hmat[r,c] <- rgb(rmat[r,c], gmat[r,c], bmat[r,c] , maxColorValue=255)				
 			}
 		}
 
-		return(rotate(mat))
-
-
-}
-
-#hex2Mat <- function(hexImage){
-#
-#	# generate a matrix to plot hex values on 
-#	len <- length(unique(hexImage))
-#	matOut <- matrix(seq(1:len),dim(hexImage)[1], dim(hexImage)[2])
-#	return(matOut)
-#}
-
+		return(rotate(hmat))
+	}
 
 plotImagePallet <- function(rgbImage, pallet){
 	
 	# plot the low res image alongside the chosen colour pallet
 		# plots with more colours and in more detail - asthetic only
 
-	rotate <- function(x) t(apply(x, 2, rev))
-	nCols <- length(pallet)
-
-	# generate a matrix of hex values			
-		
-	# pixalated image to a hex code matrix
-	rmat <- rgbImage[,,1]
-	gmat <- rgbImage[,,2]
-	bmat <- rgbImage[,,3]
-
-	### initate a new vec ###
-	nRow <- dim(rmat)[1]
-	nCol <- dim(rmat)[2]
-	mat <- matrix(0, nRow, nCol)
 	
-	for(r in 1:nRow){
-		for(c in 1:nCol){
-			mat[r,c] <- rgb(rmat[r,c], gmat[r,c], bmat[r,c] , maxColorValue=255)				
-		}
-	}
+	nCols <- length(pallet)
+	hexImage <- array2Hex(rgbImage)
 
-	hexImage <- rotate(mat) # rotate
-
-	#mat <- hex2Mat(hexImage)
-	# generate a matrix to plot hex values on 
+	### generate a matrix to plot hex values on 
 	len <- length(unique(hexImage))
 	mat <- matrix(seq(1:len),dim(hexImage)[1], dim(hexImage)[2])
 
 
-	# general configuration of plots
+
+	# configuration of plot size
 	hexCount <- length(hexImage)
 	if(hexCount < nCols){nCols <- hexCount}
-	size <- dim(mat)
-	size <- c(size[1]/size[2], size[2]/size[1]) * 10
 	counts <- as.matrix(rep(1/nCols, nCols))
+	ratio <- dim(mat)[2]/dim(mat)[1]
 
 	# generate plot
-	pdf("plot.pdf", 5, 7)
-	image(mat, axes=FALSE, col=hexImage)
+	pdf("plot.pdf", 10, 10)
+	layout(matrix(c(1,1,2,2), ncol=2, byrow=F), 
+			widths=c(3,1), # three quarters of the plot window width, second one quarter.
+			heights=c(2,2))
+	image(mat, axes=FALSE, col=hexImage, asp = ratio)
 	barplot(counts, col = pallet, axes=FALSE)
 	dev.off()
 	system("open -a Skim.app plot.pdf")

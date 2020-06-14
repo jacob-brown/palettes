@@ -11,6 +11,7 @@ readImage <- function(location){
 
 
 pixelator <- function(colarray, shortLen=10){
+
 		
 		# convert image to a lower resolution based on the short length of the image
 
@@ -78,8 +79,6 @@ pixelator <- function(colarray, shortLen=10){
 
 		}
 
-
-		
 		return(image_out)
 }
 

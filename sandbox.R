@@ -13,10 +13,6 @@ source("from_image.R")
 source("image_search.R")
 source("plotting.R")
 
-
-
-
-
 ###########################################
 #----------- Pallet from image -----------#
 
@@ -30,13 +26,13 @@ source("plotting.R")
 image_data <- readImage("web_images/picasso.1.jpg")
 #image_data <- readImage("web_images/mona_lisa.1.jpg")
 #image_data <- readImage("web_images/kalahari_sunset.1.jpg")
+#image_data <- readImage("web_images/frida_kahlo.3.jpg")
 
 # lower the resolution
 pixelated <- pixelator(image_data, shortLen=10)
 
 # decide the pallete
 pallet <- chooseRGB(pixelated, optimal=T, nColours=10, sensitivity=0.2)
-
 
 ###########################################
 #--------------- Plotting ----------------#
@@ -46,9 +42,20 @@ plotImagePallet(pixelated, pallet)
 ###########################################
 #----------- Image Search (web) ----------#
 
+# option 1. user gets images and selects the desired one
 getImages("mona lisa", out="web_images/", n=1, engine="google")
-getImages("picasso", out="web_images/", n=1, engine="google")
-getImages("kalahari sunset", out="web_images/", n=1, engine="google")
+image_data <- readImage("web_images/mona_lisa.1.jpg")
+	# continue as normal...
+
+# option 2. built in functions to assist with selection
+	# catch paths
+paths <- plotSearch("mona lisa", 5, "web_images/")
+
+# select the image
+selected <- 1
+image_data <- readImage(paths[selected])
+	# continue as normal...
+
 
 ###########################################
 #---------------- General ----------------#

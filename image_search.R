@@ -43,3 +43,34 @@ getImages <- function(searchTerm, out="./", n=1, engine=c("google", "bing")){
 
 }
 
+plotSearch <- function(searchTerm, number, localpath, returnPaths=TRUE){
+
+	# search for image term, plot images, and return paths
+
+	getImages(searchTerm, out=localpath, n=number, engine="google")
+	paths <- c()
+	pdf("plot_images.pdf", 10, 5)
+	
+	if(number < 5){
+		par(mfrow=c(1, number))
+	}else{
+		par(mfrow=c(2, ceiling(number/2)))
+	}
+	
+	for(i in 1:number){
+		
+		sterm <- gsub(" ", "_", searchTerm)
+		file <- sprintf("%s/%s.%s.jpg", localpath, sterm, as.character(i))
+		paths <- append(paths, file)
+		hex <- array2Hex(readImage(file))
+		len <- length(unique(hex))
+		mat <- matrix(seq(1:len),dim(hex)[1], dim(hex)[2])
+		ratio <- dim(mat)[2]/dim(mat)[1]
+		image(mat, axes=FALSE, xlab=file, col=hex, asp=ratio, useRaster=TRUE)
+	}
+	dev.off()
+	system("open -a Skim.app plot_images.pdf")
+
+	if(returnPaths){return(paths)}
+
+}

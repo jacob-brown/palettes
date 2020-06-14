@@ -10,7 +10,7 @@ Pallet from image
 		- keep the ratio the same
 		- deafault is 10 pixels
 	- choice selection
-		- mean, mode, median?
+		- mean, mode, median, max, min?
 * choose rgb values 
 * optimal k
 * user function to filter unwanted colours
@@ -20,12 +20,13 @@ Pallet from image
 	- combine with web search
 
 Plotting
-* combineRGB: pixelated image to a hex code matrix
-* hex2Mat: generate a matrix to plot hex values on
 * plot pixelated image and colour palette
 
 Image Search (web)
 * get images from the web
+* two options:
+	1. user manually gives the path
+	2. built in functions to get path and use image
 * user function to filter unwanted images
 * usage of pallet from image functions
 
@@ -66,10 +67,8 @@ Data
 
 
 ### 4. Usage
-* better plot of image 
 * plot colour pallet order
 * selection of poor colours
-* selection of poor images to average
 * shiny app for interactive viewing
 
 ### 5. General
