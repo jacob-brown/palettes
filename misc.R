@@ -210,3 +210,26 @@ plotVals(df_smooth)
 
 
 
+
+plotVals <- function(df){
+
+	pdf("plot.vals.pdf", 10, 10)
+	par(mfrow = c(2, 3))
+	# rgb
+	df <- df[order(df$r),]
+	barplot(df$r, main="r", col=df$pallet, names.arg=df$pallet, las=2)
+	df <- df[order(df$g),]
+	barplot(df$g, main="g", col=df$pallet, names.arg=df$pallet, las=2)
+	df <- df[order(df$b),]
+	barplot(df$b, main="b", col=df$pallet, names.arg=df$pallet, las=2)
+	# hsl
+	df <- df[order(df$hue),]
+	barplot(df$hue, main="hue", col=df$pallet, names.arg=df$pallet, las=2)
+	df <- df[order(df$saturation),]
+	barplot(df$saturation, main="saturation", col=df$pallet, names.arg=df$pallet, las=2)
+	df <- df[order(df$lightness),]
+	barplot(df$lightness, main="lightness", col=df$pallet, names.arg=df$pallet, las=2)
+	dev.off()
+	system("open -a Skim.app plot.vals.pdf")
+
+}
